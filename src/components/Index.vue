@@ -30,9 +30,19 @@
             <!-- Search bar -->
             <form class="form-inline my-3 my-lg-0">
               <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search" aria-label="Search" />
+                <input
+                  v-model.trim="searchText"
+                  class="form-control"
+                  type="text"
+                  placeholder="Search"
+                  aria-label="Search"
+                />
                 <div class="input-group-append">
-                  <button class="btn btn-outline-warning" type="submit">
+                  <button
+                    @click.prevent="SearchProducts"
+                    class="btn btn-outline-warning"
+                    type="submit"
+                  >
                     <i class="fa fa-search" aria-hidden="true"></i>
                   </button>
                 </div>
@@ -59,7 +69,11 @@
                   </div>
                 </div>
               </div>
-              <Pagination v-if="pagination.total_pages > 1" :paging="pagination" @trigger="TriggerPagination"/>
+              <Pagination
+                v-if="pagination.total_pages > 1"
+                :paging="pagination"
+                @trigger="TriggerPagination"
+              />
             </div>
 
             <!-- <div class="tab-pane" id="list-gift">
@@ -115,13 +129,14 @@ export default {
       productsAll: [],
       productsShow: [],
       productsShowLengthPerPage: 9,
-      productsShowPaginated:[],
+      productsShowPaginated: [],
       productsCategory: ["全部", "居家品味", "風格文具"],
       productsCategoryShow: "",
       pagination: {
         total_pages: 0,
         current_page: 1
-      }
+      },
+      searchText: ""
     };
   },
   created() {
@@ -150,15 +165,22 @@ export default {
         vm.productsShow = vm.productsAll.filter(item => {
           return item.category === category;
         });
-      };
+      }
       // for pagination：將要呈現的產品分頁
-      vm.pagination.total_pages = Math.ceil(vm.productsShow.length / vm.productsShowLengthPerPage);
-      if(vm.pagination.total_pages > 1){
-        let totalAry = [], count = 0, pageAry = [];
-        vm.productsShow.forEach((item,index)=>{
+      vm.pagination.total_pages = Math.ceil(
+        vm.productsShow.length / vm.productsShowLengthPerPage
+      );
+      if (vm.pagination.total_pages > 1) {
+        let totalAry = [],
+          count = 0,
+          pageAry = [];
+        vm.productsShow.forEach((item, index) => {
           pageAry.push(item);
           count += 1;
-          if(count === vm.productsShowLengthPerPage || (index+1)===vm.productsShow.length){
+          if (
+            count === vm.productsShowLengthPerPage ||
+            index + 1 === vm.productsShow.length
+          ) {
             totalAry.push(pageAry);
             pageAry = [];
             count = 0;
@@ -168,12 +190,25 @@ export default {
       }
       vm.TriggerPagination();
     },
-    TriggerPagination(current_page = 1){
+    TriggerPagination(current_page = 1) {
       const vm = this;
       // console.log('翻頁，到第幾頁：',current_page,'總頁數',vm.pagination.total_pages);
-      if(vm.pagination.total_pages == 1){return};
-      vm.productsShow = vm.productsShowPaginated[current_page-1];
+      if (vm.pagination.total_pages == 1) {
+        return;
+      }
+      vm.productsShow = vm.productsShowPaginated[current_page - 1];
     },
+    SearchProducts() {
+      const vm = this;
+      if(vm.searchText === ''){
+        vm.FilterProductsCategory();
+        return;
+      }
+      vm.productsShow = vm.productsAll.filter(function(item) {
+        return item.title.match(vm.searchText);
+      });
+      vm.pagination.total_pages = 0;
+    }
   }
 };
 </script>
