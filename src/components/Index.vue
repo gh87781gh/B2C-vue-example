@@ -59,7 +59,7 @@
                   </div>
                 </div>
               </div>
-              <Pagination v-if="productsShow.length > 10" />
+              <Pagination v-if="pagination.total_pages > 1" :paging="pagination" @trigger="TriggerPagination"/>
             </div>
 
             <!-- <div class="tab-pane" id="list-gift">
@@ -111,11 +111,17 @@ export default {
   },
   data() {
     return {
-      isLoading:false,
+      isLoading: false,
       productsAll: [],
       productsShow: [],
-      productsCategory: ['全部','居家品味','風格文具'],
+      productsShowLengthPerPage: 9,
+      productsShowPaginated:[],
+      productsCategory: ["全部", "居家品味", "風格文具"],
       productsCategoryShow: "",
+      pagination: {
+        total_pages: 0,
+        current_page: 1
+      }
     };
   },
   created() {
@@ -135,39 +141,60 @@ export default {
         }
       });
     },
-    FilterProductsCategory(category = '全部') {
+    FilterProductsCategory(category = "全部") {
       const vm = this;
       vm.productsCategoryShow = category;
-      if(category === '全部'){
+      if (category === "全部") {
         vm.productsShow = vm.productsAll;
-        return;
+      } else {
+        vm.productsShow = vm.productsAll.filter(item => {
+          return item.category === category;
+        });
+      };
+      // for pagination：將要呈現的產品分頁
+      vm.pagination.total_pages = Math.ceil(vm.productsShow.length / vm.productsShowLengthPerPage);
+      if(vm.pagination.total_pages > 1){
+        let totalAry = [], count = 0, pageAry = [];
+        vm.productsShow.forEach((item,index)=>{
+          pageAry.push(item);
+          count += 1;
+          if(count === vm.productsShowLengthPerPage || (index+1)===vm.productsShow.length){
+            totalAry.push(pageAry);
+            pageAry = [];
+            count = 0;
+          }
+        });
+        vm.productsShowPaginated = totalAry;
       }
-      vm.productsShow = vm.productsAll.filter(item => {
-        return item.category === category;
-      });
-    }
+      vm.TriggerPagination();
+    },
+    TriggerPagination(current_page = 1){
+      const vm = this;
+      // console.log('翻頁，到第幾頁：',current_page,'總頁數',vm.pagination.total_pages);
+      if(vm.pagination.total_pages == 1){return};
+      vm.productsShow = vm.productsShowPaginated[current_page-1];
+    },
   }
 };
 </script>
 
 <style scope lang="scss">
-.p-bg-indexBG{
+.p-bg-indexBG {
   background-image: url(~@/assets/images/index/index-bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 60%;
 }
 
-.text-shadow{
-  text-shadow: 0 0 10px rgba(0,0,0,.7)
+.text-shadow {
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
 }
 
-.list-group-item{
+.list-group-item {
   cursor: pointer;
 
-  &.active{
-    color:#fff!important;
+  &.active {
+    color: #fff !important;
   }
 }
-
 </style>
