@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading :active.sync="isLoading"></Loading>
 
     <div class="jumbotron jumbotron-fluid jumbotron-bg d-flex align-items-end p-bg-indexBG">
       <div class="container">
@@ -110,10 +111,11 @@ export default {
   },
   data() {
     return {
+      isLoading:false,
       productsAll: [],
       productsShow: [],
       productsCategory: ['全部','居家品味','風格文具'],
-      productsCategoryShow: ""
+      productsCategoryShow: "",
     };
   },
   created() {
@@ -123,11 +125,13 @@ export default {
     GetProducts() {
       const vm = this;
       const api = `${process.env.Get_products}/all`;
+      vm.isLoading = true;
       this.$http.get(api).then(response => {
         console.log(response.data);
         if (response.data.success) {
           vm.productsAll = response.data.products;
           this.FilterProductsCategory();
+          vm.isLoading = false;
         }
       });
     },
