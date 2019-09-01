@@ -281,7 +281,7 @@ export default {
       const api = process.env.Get_cart;
       vm.isLoading = true;
       this.$http.get(api).then(response => {
-        // console.log('取得購物車列表',response.data);
+        console.log('取得購物車列表',response.data);
         if (response.data.success) {
           vm.carts = response.data.data.carts;
           vm.priceTotal = response.data.data.total;
@@ -291,7 +291,7 @@ export default {
       });
     },
     CallModal(item){
-      console.log('自購物車刪除商品',item);
+      // console.log('自購物車刪除商品',item);
       const vm = this;
       vm.removeText = item.product.title;
       vm.delCartId = item.id;
@@ -310,8 +310,8 @@ export default {
       });
     },
     UseCoupon(){
-      console.log('套用優惠券'); 
-      const api = process.env.Post_cart;
+      // console.log('套用優惠券'); 
+      const api = process.env.Post_coupon;
       const vm = this;
       const coupon = {
         code:vm.couponCode
@@ -330,12 +330,11 @@ export default {
       const vm = this;
       vm.form.user.address = `${vm.address.id}${vm.address.county}${vm.address.city}${vm.address.content}`;
       this.$http.post(api,{data:vm.form}).then(response => {
-        console.log(vm.form);
         console.log(response.data);
-        // console.log(response.data.orderId);
-        // if(response.data.success){
-        //   vm.$router.push(`/dashboard/check_out/${response.data.orderId}`);
-        // }
+        console.log(response.data.orderId);
+        if(response.data.success){
+          vm.$router.push(`/checkout/pay/${response.data.orderId}`);
+        }
       });
     },
   }

@@ -6,7 +6,7 @@
       <div class="container">
         <div class="p-3 bg-lighter text-light text-shadow">
           <h1 class="display-3 font-weight-bold">你的腦叫你一直買</h1>
-          <p class="lead">This is a website that gives you the best selector.</p>
+          <p class="lead">This is a website that gives you the best selection.</p>
         </div>
       </div>
     </div>

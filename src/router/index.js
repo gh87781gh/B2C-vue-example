@@ -6,6 +6,8 @@ import Index from '@/components/Index'
 import ProductDetail from '@/components/ProductDetail'
 import CheckOut from '@/components/CheckOut'
 import Carts from '@/components/Carts'
+import Pay from '@/components/Pay'
+import Done from '@/components/Done'
 
 Vue.use(Router)
 
@@ -17,7 +19,7 @@ export default new Router({
     },
     {
       path: '/index',
-      name: 'index',
+      name: 'Index',
       component: Index
     },
     {
@@ -32,8 +34,18 @@ export default new Router({
       children:[
         {
           path: '',
-          name: 'carts',
+          name: 'Carts',
           component: Carts
+        },
+        {
+          path: 'pay/:id',
+          name: 'Pay',
+          component: Pay
+        },
+        {
+          path: 'done',
+          name: 'Done',
+          component: Done
         },
       ]
     },

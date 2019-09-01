@@ -14,4 +14,6 @@ module.exports = merge(prodEnv, {
   Delete_cart: '"https://vue-course-api.hexschool.io/api/jennyshih/cart"',
   Post_coupon: '"https://vue-course-api.hexschool.io/api/jennyshih/coupon"',
   Post_order: '"https://vue-course-api.hexschool.io/api/jennyshih/order"',
+  Get_order: '"https://vue-course-api.hexschool.io/api/jennyshih/order"',
+  Post_pay: '"https://vue-course-api.hexschool.io/api/jennyshih/pay"',
 })
