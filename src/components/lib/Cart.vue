@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModal" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header bg-danger text-white">
@@ -92,7 +92,7 @@ export default {
       // console.log('確認刪除商品',vm.delCartId);
       const api = `${process.env.Delete_cart}/${vm.delCartId}`;
       this.$http.delete(api).then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.success) {
           vm.GetCart();
           $('#removeModal').modal('hide');
@@ -100,7 +100,7 @@ export default {
       });
     },
     CheckOut(){
-      
+      this.$router.push('/checkout');
     },
   },
 }
