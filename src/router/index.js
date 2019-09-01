@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import Index from '@/components/Index'
 import ProductDetail from '@/components/ProductDetail'
 import CheckOut from '@/components/CheckOut'
+import Carts from '@/components/Carts'
 
 Vue.use(Router)
 
@@ -26,8 +27,15 @@ export default new Router({
     },
     {
       path: '/checkout', 
-      name: 'CheckOut',
-      component: CheckOut
+      name: '',
+      component: CheckOut,
+      children:[
+        {
+          path: '',
+          name: 'carts',
+          component: Carts
+        },
+      ]
     },
     // {
     //   path: '/test',

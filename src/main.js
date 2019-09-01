@@ -13,6 +13,20 @@ Vue.use(VueAxios, axios);
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 Vue.component('Loading',Loading);
+// vee-validate
+// vee-validate 必須引入
+import { ValidationProvider,ValidationObserver } from 'vee-validate';
+import { extend } from 'vee-validate';
+// 引入所有 rules
+import * as rules from 'vee-validate/dist/rules';
+for (let rule in rules) {extend(rule, rules[rule])};
+// 引入指定語言
+import { localize } from 'vee-validate';
+import zh_TW from 'vee-validate/dist/locale/zh_TW.json';
+localize('zh_TW', zh_TW);
+// 啟用元件
+Vue.component('ValidationProvider', ValidationProvider);
+Vue.component('ValidationObserver', ValidationObserver);
 
 // 自定義
 import CurrencyFilter from '@/components/filter/currencyFilter';

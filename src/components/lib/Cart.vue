@@ -100,7 +100,9 @@ export default {
       });
     },
     CheckOut(){
-      this.$router.push('/checkout');
+      if(this.carts.length !== 0){
+        this.$router.push('/checkout');
+      }
     },
   },
 }

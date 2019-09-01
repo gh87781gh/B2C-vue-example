@@ -162,13 +162,6 @@ export default {
         }
       });
     },
-    // TriggerCategory(){
-    //   const vm = this;
-    //   // vm.productsCategoryShow = vm.$route.query.category;
-    //   console.log( vm.$route.query.category)
-    //   // console.log('自動跳到特定分類',vm.productsCategoryShow,vm.productsCategoryShow)
-    //   // vm.FilterProductsCategory(vm.$route.query.category);
-    // },
     FilterProductsCategory(category = "全部") {
       const vm = this;
       vm.productsCategoryShow = category;
