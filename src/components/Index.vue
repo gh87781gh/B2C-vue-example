@@ -62,7 +62,7 @@
                       <p class="card-text">{{item.description}}</p>
                     </div>
                     <div class="card-footer border-top-0 bg-white">
-                      <a @click.prevent="GoToProductDetail(item.id)" href="#" class="btn btn-outline-secondary btn-block btn-sm">
+                      <a @click.prevent="GoToProductDetail(item.id)" href="#" class="btn btn-outline-primary btn-block btn-sm">
                         <i class="fa fa-cart-plus" aria-hidden="true"></i> 搶購去
                       </a>
                     </div>

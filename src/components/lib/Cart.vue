@@ -3,7 +3,8 @@
     <!-- page start -->
     <div class="dropdown ml-auto">
       <button class="btn btn-sm btn-cart" data-toggle="dropdown" data-flip="false">
-        <i class="fa fa-shopping-cart text-dark fa-2x" aria-hidden="true"></i>
+        <!-- <i class="fa fa-shopping-cart text-dark fa-2x" aria-hidden="true"></i> -->
+        <i class="fas fa-shopping-basket fa-2x"></i>
         <span class="badge badge-pill badge-danger">{{carts.length}}</span>
       </button>
       <div class="dropdown-menu dropdown-menu-right p-3" style="min-width: 320px" data-offset="400">

@@ -73,7 +73,7 @@
         <div class="input-group my-4">
           <input type="text" class="form-control" v-model="couponCode" placeholder="請輸入優惠碼" />
           <div class="input-group-append">
-            <button @click.prevent="UseCoupon" class="btn btn-outline-secondary" type="button">套用優惠碼</button>
+            <button @click.prevent="UseCoupon" class="btn btn-outline-warning" type="button">套用優惠碼</button>
           </div>
         </div>
         <p class="text-success">{{usedCouponCodeMsg}}</p>

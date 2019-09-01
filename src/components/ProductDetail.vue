@@ -23,7 +23,7 @@
             <div class="d-flex my-3 align-items-end justify-content-end">
               <del class="text-muted">售價 {{product.origin_price | CurrencyFilter}}</del>
               <div class="h3 mb-0 ml-auto text-danger">
-                <small>網路價 NT$</small>
+                <small>網路價 NT</small>
                 <strong>{{product.price | CurrencyFilter}}</strong>
               </div>
             </div>
@@ -50,8 +50,7 @@
           </div>
         </div>
         <div class="col-md-8">
-          <h2>{{product.title}}</h2>
-          <h4 class="my-4">{{product.description}}</h4>
+          <h4 class="mb-4">{{product.description}}</h4>
           <p class="card-text">{{product.content}}</p>
           <img :src="product.imageUrl" class="w-100" alt/>
           <div class="alert alert-secondary mt-4" role="alert">
