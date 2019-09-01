@@ -9,4 +9,5 @@ module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
   Get_products: '"https://vue-course-api.hexschool.io/api/jennyshih/products"',
   Get_product: '"https://vue-course-api.hexschool.io/api/jennyshih/product"',
+  Post_cart: '"https://vue-course-api.hexschool.io/api/jennyshih/cart"',
 })

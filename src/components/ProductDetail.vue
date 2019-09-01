@@ -30,11 +30,15 @@
 
             <div class="input-group mt-3">
               <select v-model="qty" name class="form-control mr-1">
-                <option v-for="item in 10" :key="item" value="item">{{item}} {{product.unit}}</option>
+                <option v-for="item in 10" :key="item" :value="item" :selected="item == 1">
+                  {{item}} {{product.unit}}
+                </option>
               </select>
               <!-- TODO 加入購物車 -->
-              <a href="shoppingCart-checkout.html" class="btn btn-primary">
-                <i class="fa fa-cart-plus" aria-hidden="true"></i> 加入購物車
+              <a @click.prevent="AddToCart" href="#" class="btn btn-primary">
+                <i v-if="status.addingToCart" class="fas fa-circle-notch fa-spin"></i>
+                <i v-else class="fa fa-cart-plus" aria-hidden="true"></i> 
+                加入購物車
               </a>
             </div>
 
@@ -82,7 +86,10 @@ export default {
     return {
       isLoading:false,
       product: {},
-      qty: 0
+      qty: 1,
+      status:{
+        addingToCart:false,
+      },
     };
   },
   created() {
@@ -104,6 +111,23 @@ export default {
     },
     BackToCategory(category){
       this.$router.push(`/index?category=${category}`);
+    },
+    AddToCart(){
+      const vm = this;
+      const api = process.env.Post_cart;
+      const product = {
+        product_id:vm.product.id,
+        qty:vm.qty,
+      }
+      vm.status.addingToCart = true;
+      this.$http.post(api,{data:product}).then(response => {
+        console.log(response.data);
+        // if (response.data.success) {
+        //   vm.product = response.data.product;
+        //   vm.isLoading = false;
+        // }
+        vm.status.addingToCart = false;
+      });
     },
   }
 };
