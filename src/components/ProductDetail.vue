@@ -122,12 +122,10 @@ export default {
       vm.status.addingToCart = true;
       this.$http.post(api,{data:product}).then(response => {
         console.log(response.data);
-        // if (response.data.success) {
-        //   vm.product = response.data.product;
-        //   vm.isLoading = false;
-        // }
+        this.$bus.$emit('GetCartList');
         vm.status.addingToCart = false;
       });
+      
     },
   }
 };

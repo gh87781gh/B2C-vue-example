@@ -20,6 +20,7 @@ import TimeStampFilter from '@/components/filter/timestampFilter';
 Vue.config.productionTip = false
 Vue.filter('CurrencyFilter',CurrencyFilter);
 Vue.filter('TimestampFilter',TimeStampFilter);
+import './bus';
 
 /* eslint-disable no-new */
 new Vue({

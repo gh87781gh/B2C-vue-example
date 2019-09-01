@@ -10,4 +10,6 @@ module.exports = merge(prodEnv, {
   Get_products: '"https://vue-course-api.hexschool.io/api/jennyshih/products"',
   Get_product: '"https://vue-course-api.hexschool.io/api/jennyshih/product"',
   Post_cart: '"https://vue-course-api.hexschool.io/api/jennyshih/cart"',
+  Get_cart: '"https://vue-course-api.hexschool.io/api/jennyshih/cart"',
+  Delete_cart: '"https://vue-course-api.hexschool.io/api/jennyshih/cart"',
 })
