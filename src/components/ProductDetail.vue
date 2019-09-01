@@ -1,17 +1,18 @@
 <template>
   <div>
     <!-- page start -->
+    <Loading :active.sync="isLoading"></Loading>
+
     <div class="container main-contant mb-1">
-      <!-- TODO breadscrumb -->
       <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb bg-transparent pl-0">
           <li class="breadcrumb-item">
-            <a href="#">首頁</a>
+            <router-link to="/index">首頁</router-link>
           </li>
           <li class="breadcrumb-item">
-            <a href="#">金牌專賣店</a>
+            <a @click.prevent="BackToCategory(product.category)" href="#">{{product.category}}</a>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">金牌西裝</li>
+          <li class="breadcrumb-item active" aria-current="page">{{product.title}}</li>
         </ol>
       </nav>
 
@@ -20,10 +21,10 @@
           <div class="sticky-top" style="top: 10px;">
             <h1 class="h2">{{product.title}}</h1>
             <div class="d-flex my-3 align-items-end justify-content-end">
-              <del class="text-muted">售價 {{product.origin_price}}</del>
+              <del class="text-muted">售價 {{product.origin_price | CurrencyFilter}}</del>
               <div class="h3 mb-0 ml-auto text-danger">
                 <small>網路價 NT$</small>
-                <strong>{{product.price}}</strong>
+                <strong>{{product.price | CurrencyFilter}}</strong>
               </div>
             </div>
 
@@ -79,6 +80,7 @@
 export default {
   data() {
     return {
+      isLoading:false,
       product: {},
       qty: 0
     };
@@ -99,7 +101,10 @@ export default {
           vm.isLoading = false;
         }
       });
-    }
+    },
+    BackToCategory(category){
+      this.$router.push(`/index?category=${category}`);
+    },
   }
 };
 </script>

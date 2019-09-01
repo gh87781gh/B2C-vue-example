@@ -141,21 +141,34 @@ export default {
   },
   created() {
     this.GetProducts();
+    // this.TriggerCategory();
   },
   methods: {
     GetProducts() {
       const vm = this;
       const api = `${process.env.Get_products}/all`;
+      let category = vm.$route.query.category;
       vm.isLoading = true;
       this.$http.get(api).then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         if (response.data.success) {
           vm.productsAll = response.data.products;
-          this.FilterProductsCategory();
+          if(category == undefined){
+            this.FilterProductsCategory();
+          }else{
+            this.FilterProductsCategory(category);
+          }
           vm.isLoading = false;
         }
       });
     },
+    // TriggerCategory(){
+    //   const vm = this;
+    //   // vm.productsCategoryShow = vm.$route.query.category;
+    //   console.log( vm.$route.query.category)
+    //   // console.log('自動跳到特定分類',vm.productsCategoryShow,vm.productsCategoryShow)
+    //   // vm.FilterProductsCategory(vm.$route.query.category);
+    // },
     FilterProductsCategory(category = "全部") {
       const vm = this;
       vm.productsCategoryShow = category;
