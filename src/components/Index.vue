@@ -62,7 +62,7 @@
                       <p class="card-text">{{item.description}}</p>
                     </div>
                     <div class="card-footer border-top-0 bg-white">
-                      <a href="#" class="btn btn-outline-secondary btn-block btn-sm">
+                      <a @click.prevent="GoToProductDetail(item.id)" href="#" class="btn btn-outline-secondary btn-block btn-sm">
                         <i class="fa fa-cart-plus" aria-hidden="true"></i> 搶購去
                       </a>
                     </div>
@@ -208,7 +208,10 @@ export default {
         return item.title.match(vm.searchText);
       });
       vm.pagination.total_pages = 0;
-    }
+    },
+    GoToProductDetail(id){
+      this.$router.push(`product/${id}`);
+    },
   }
 };
 </script>
