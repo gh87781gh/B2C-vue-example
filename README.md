@@ -1,19 +1,5 @@
-# b2c-vue-example
+# Vue 電商網站作品 Demo
 
-> A Vue.js project
+> A project created by Vue.js, vue-cli, vue-router, JavaScript
 
-## Build Setup
-
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+## My resume:https://www.cakeresume.com/s--kik6iMgwkdFLKSHTYvlZeg--/jennyshih-F2E
