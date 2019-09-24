@@ -53,6 +53,7 @@
             <div class="tab-pane active" id="list-gold">
               <div class="row">
                 <!-- cards -->
+                <!-- <div v-for="item in productsShow" :key="item.id" class="col-md-4 mb-4"> -->
                 <div v-for="item in productsShow" :key="item.id" class="col-md-4 mb-4">
                   <div class="card border-0 box-shadow text-center h-100">
                     <img class="card-img-top" :src="item.imageUrl" alt="Card image cap" />
@@ -125,8 +126,8 @@ export default {
   data() {
     return {
       // isLoading: false,//改成由 Vuex 統一管理
-      productsAll: [],
-      productsShow: [],
+      // productsAll: [],
+      // productsShow: [],
       productsShowLengthPerPage: 9,
       productsShowPaginated: [],
       productsCategory: ["全部", "居家品味", "風格文具"],
@@ -138,85 +139,92 @@ export default {
       searchText: ""
     };
   },
+  computed:{
+    productsShow(){
+      return this.$store.state.productsAll;
+    }
+  },
   created() {
     this.GetProducts();
     // this.TriggerCategory();
   },
   methods: {
     GetProducts() {
-      const vm = this;
-      const api = `${process.env.Get_products}/all`;
-      let category = vm.$route.query.category;
-      vm.$store.dispatch('updateLoading',true);
-      this.$http.get(api).then(response => {
-        // console.log(response.data);
-        if (response.data.success) {
-          vm.productsAll = response.data.products;
-          if(category == undefined){
-            this.FilterProductsCategory();
-          }else{
-            this.FilterProductsCategory(category);
-          }
-          vm.$store.dispatch('updateLoading',false);
-        }
-      });
+      this.$store.dispatch('GetProducts');
+      // const vm = this;
+      // const api = `${process.env.Get_products}/all`;
+      // let category = vm.$route.query.category;
+      // console.log(vm.$route)
+      // vm.$store.dispatch('updateLoading',true);
+      // this.$http.get(api).then(response => {
+      //   // console.log(response.data);
+      //   if (response.data.success) {
+      //     vm.productsAll = response.data.products;
+      //     if(category == undefined){
+      //       this.FilterProductsCategory();
+      //     }else{
+      //       this.FilterProductsCategory(category);
+      //     }
+      //     vm.$store.dispatch('updateLoading',false);
+      //   }
+      // });
     },
-    FilterProductsCategory(category = "全部") {
-      const vm = this;
-      vm.productsCategoryShow = category;
-      if (category === "全部") {
-        vm.productsShow = vm.productsAll;
-      } else {
-        vm.productsShow = vm.productsAll.filter(item => {
-          return item.category === category;
-        });
-      }
-      // for pagination：將要呈現的產品分頁
-      vm.pagination.total_pages = Math.ceil(
-        vm.productsShow.length / vm.productsShowLengthPerPage
-      );
-      if (vm.pagination.total_pages > 1) {
-        let totalAry = [],
-          count = 0,
-          pageAry = [];
-        vm.productsShow.forEach((item, index) => {
-          pageAry.push(item);
-          count += 1;
-          if (
-            count === vm.productsShowLengthPerPage ||
-            index + 1 === vm.productsShow.length
-          ) {
-            totalAry.push(pageAry);
-            pageAry = [];
-            count = 0;
-          }
-        });
-        vm.productsShowPaginated = totalAry;
-      }
-      vm.TriggerPagination();
-    },
-    TriggerPagination(current_page = 1) {
-      const vm = this;
-      // console.log('翻頁，到第幾頁：',current_page,'總頁數',vm.pagination.total_pages);
-      if (vm.pagination.total_pages == 1) {
-        return;
-      }
-      vm.productsShow = vm.productsShowPaginated[current_page - 1];
-    },
-    SearchProducts() {
-      const vm = this;
-      if(vm.searchText === ''){
-        vm.FilterProductsCategory();
-        return;
-      }
-      vm.productsShow = vm.productsAll.filter(function(item) {
-        return item.title.match(vm.searchText);
-      });
-      vm.pagination.total_pages = 0;
-    },
-    GoToProductDetail(id){
-      this.$router.push(`product/${id}`);
-    },
+    // FilterProductsCategory(category = "全部") {
+    //   const vm = this;
+    //   vm.productsCategoryShow = category;
+    //   if (category === "全部") {
+    //     vm.productsShow = vm.productsAll;
+    //   } else {
+    //     vm.productsShow = vm.productsAll.filter(item => {
+    //       return item.category === category;
+    //     });
+    //   }
+    //   // for pagination：將要呈現的產品分頁
+    //   vm.pagination.total_pages = Math.ceil(
+    //     vm.productsShow.length / vm.productsShowLengthPerPage
+    //   );
+    //   if (vm.pagination.total_pages > 1) {
+    //     let totalAry = [],
+    //       count = 0,
+    //       pageAry = [];
+    //     vm.productsShow.forEach((item, index) => {
+    //       pageAry.push(item);
+    //       count += 1;
+    //       if (
+    //         count === vm.productsShowLengthPerPage ||
+    //         index + 1 === vm.productsShow.length
+    //       ) {
+    //         totalAry.push(pageAry);
+    //         pageAry = [];
+    //         count = 0;
+    //       }
+    //     });
+    //     vm.productsShowPaginated = totalAry;
+    //   }
+    //   vm.TriggerPagination();
+    // },
+    // TriggerPagination(current_page = 1) {
+    //   const vm = this;
+    //   // console.log('翻頁，到第幾頁：',current_page,'總頁數',vm.pagination.total_pages);
+    //   if (vm.pagination.total_pages == 1) {
+    //     return;
+    //   }
+    //   vm.productsShow = vm.productsShowPaginated[current_page - 1];
+    // },
+    // SearchProducts() {
+    //   const vm = this;
+    //   if(vm.searchText === ''){
+    //     vm.FilterProductsCategory();
+    //     return;
+    //   }
+    //   vm.productsShow = vm.productsAll.filter(function(item) {
+    //     return item.title.match(vm.searchText);
+    //   });
+    //   vm.pagination.total_pages = 0;
+    // },
+    // GoToProductDetail(id){
+    //   this.$router.push(`product/${id}`);
+    // },
   },
 };
 </script>

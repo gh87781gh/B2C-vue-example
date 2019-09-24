@@ -9,8 +9,8 @@ import 'bootstrap';
 Vue.use(Vuex);
 import store from './store';
 // vue-axios
-import axios from 'axios'
-import VueAxios from 'vue-axios'
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 Vue.use(VueAxios, axios);
 // vue-loading-overlay
 import Loading from 'vue-loading-overlay';
