@@ -1,7 +1,5 @@
 <template>
   <div>
-    <Loading :active.sync="isLoading"></Loading>
-
     <div class="jumbotron jumbotron-fluid jumbotron-bg d-flex align-items-end p-bg-indexBG">
       <div class="container">
         <div class="p-3 bg-lighter text-light text-shadow">
@@ -125,7 +123,7 @@ export default {
   },
   data() {
     return {
-      isLoading: false,
+      // isLoading: false,//改成由 Vuex 統一管理
       productsAll: [],
       productsShow: [],
       productsShowLengthPerPage: 9,
@@ -148,7 +146,7 @@ export default {
       const vm = this;
       const api = `${process.env.Get_products}/all`;
       let category = vm.$route.query.category;
-      vm.isLoading = true;
+      vm.$store.state.isLoading = true;
       this.$http.get(api).then(response => {
         // console.log(response.data);
         if (response.data.success) {
@@ -158,7 +156,7 @@ export default {
           }else{
             this.FilterProductsCategory(category);
           }
-          vm.isLoading = false;
+          vm.$store.state.isLoading = false;
         }
       });
     },
@@ -218,7 +216,7 @@ export default {
     GoToProductDetail(id){
       this.$router.push(`product/${id}`);
     },
-  }
+  },
 };
 </script>
 

@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <Loading :active.sync="isLoading"></Loading>
+
     <Nav />
     <!-- 第 1 層頁面元件 -->
     <router-view />
@@ -24,6 +26,11 @@ export default {
   //     console.log(response.data);
   //   });
   // }
+  computed:{
+    isLoading(){
+      return this.$store.state.isLoading;
+    },
+  },
 };
 </script>
 
