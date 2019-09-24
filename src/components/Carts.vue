@@ -277,14 +277,14 @@ export default {
     GetCart() {
       const vm = this;
       const api = process.env.Get_cart;
-      vm.$store.state.isLoading = true;
+      vm.$store.dispatch('updateLoading',true);
       this.$http.get(api).then(response => {
         console.log('取得購物車列表',response.data);
         if (response.data.success) {
           vm.carts = response.data.data.carts;
           vm.priceTotal = response.data.data.total;
           vm.priceTotalFinal = response.data.data.final_total;
-          vm.$store.state.isLoading = false;
+          vm.$store.dispatch('updateLoading',false);
         }
       });
     },

@@ -24,6 +24,7 @@
           </div>
         </div>
         <div class="col-md-9">
+          <button @click.prevent="GetProducts">重新載入資料</button>
           <div class="d-flex mb-4">
             <!-- Search bar -->
             <form class="form-inline my-3 my-lg-0">
@@ -146,7 +147,7 @@ export default {
       const vm = this;
       const api = `${process.env.Get_products}/all`;
       let category = vm.$route.query.category;
-      vm.$store.state.isLoading = true;
+      vm.$store.dispatch('updateLoading',true);
       this.$http.get(api).then(response => {
         // console.log(response.data);
         if (response.data.success) {
@@ -156,7 +157,7 @@ export default {
           }else{
             this.FilterProductsCategory(category);
           }
-          vm.$store.state.isLoading = false;
+          vm.$store.dispatch('updateLoading',false);
         }
       });
     },

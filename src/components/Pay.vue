@@ -83,22 +83,22 @@ export default {
       // console.log("取得訂單");
       const vm = this;
       const api = `${process.env.Get_order}/${vm.orderId}`;
-      vm.$store.state.isLoading = true;
+      vm.$store.dispatch('updateLoading',true);
       this.$http.get(api).then(response => {
         console.log(response.data);
         vm.order = response.data.order;
-        vm.$store.state.isLoading = false;
+        vm.$store.dispatch('updateLoading',false);
       });
     },
     PayOrder() {
       console.log("結帳付款去");
       const vm = this;
       const api = `${process.env.Post_pay}/${vm.orderId}`;
-      vm.$store.state.isLoading = true;
+      vm.$store.dispatch('updateLoading',true);
       this.$http.post(api).then(response => {
         console.log(response.data);
         if(response.data.success){
-          vm.$store.state.isLoading = false;
+          vm.$store.dispatch('updateLoading',false);
           vm.$router.push('/checkout/done');
         }
       });
