@@ -68,7 +68,6 @@
 export default {
   data() {
     return {
-      isLoading: false,
       orderId: "",
       order:{
         user:{},
@@ -84,22 +83,22 @@ export default {
       // console.log("取得訂單");
       const vm = this;
       const api = `${process.env.Get_order}/${vm.orderId}`;
-      vm.isLoading = true;
+      vm.$store.state.isLoading = true;
       this.$http.get(api).then(response => {
         console.log(response.data);
         vm.order = response.data.order;
-        vm.isLoading = false;
+        vm.$store.state.isLoading = false;
       });
     },
     PayOrder() {
       console.log("結帳付款去");
       const vm = this;
       const api = `${process.env.Post_pay}/${vm.orderId}`;
-      vm.isLoading = true;
+      vm.$store.state.isLoading = true;
       this.$http.post(api).then(response => {
         console.log(response.data);
         if(response.data.success){
-          vm.isLoading = false;
+          vm.$store.state.isLoading = false;
           vm.$router.push('/checkout/done');
         }
       });

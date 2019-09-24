@@ -14,11 +14,16 @@ import Nav from "./components/lib/Nav";
 import Footer from "./components/lib/Footer";
 
 export default {
+  name: "App",
   components: {
     Nav,
     Footer
   },
-  name: "App",
+  computed:{
+    isLoading(){
+      return this.$store.state.isLoading;
+    },
+  },
   // created() {
   //   console.log(process.env.Get_products);
   //   const api = process.env.Get_products;
@@ -26,11 +31,7 @@ export default {
   //     console.log(response.data);
   //   });
   // }
-  computed:{
-    isLoading(){
-      return this.$store.state.isLoading;
-    },
-  },
+
 };
 </script>
 

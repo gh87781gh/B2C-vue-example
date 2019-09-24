@@ -1,7 +1,6 @@
 <template>
   <div>
     <!-- page start -->
-    <Loading :active.sync="isLoading"></Loading>
 
     <section class="row justify-content-center mt-5">
       <div class="col-md-8">
@@ -209,7 +208,6 @@ import twzipcode from 'twzipcode-data'
 export default {
   data() {
     return {
-      isLoading:false,
       carts: [],
       priceTotal:0,
       priceTotalFinal:0,
@@ -279,14 +277,14 @@ export default {
     GetCart() {
       const vm = this;
       const api = process.env.Get_cart;
-      vm.isLoading = true;
+      vm.$store.state.isLoading = true;
       this.$http.get(api).then(response => {
         console.log('取得購物車列表',response.data);
         if (response.data.success) {
           vm.carts = response.data.data.carts;
           vm.priceTotal = response.data.data.total;
           vm.priceTotalFinal = response.data.data.final_total;
-          vm.isLoading = false;
+          vm.$store.state.isLoading = false;
         }
       });
     },
