@@ -17,14 +17,14 @@
             <a
               v-for="(item,index) in productsCategory"
               :key="index"
-              @click.prevent="FilterProductsCategory(item)"
+              @click.prevent="changeProductsCategory(item)"
               :class="{'active':item === productsCategoryShow}"
               class="list-group-item list-group-item-action"
             >{{item}}</a>
           </div>
         </div>
         <div class="col-md-9">
-          <button @click.prevent="GetProducts">重新載入資料</button>
+          <button @click.prevent="getProducts">重新載入資料</button>
           <div class="d-flex mb-4">
             <!-- Search bar -->
             <form class="form-inline my-3 my-lg-0">
@@ -118,6 +118,7 @@
 
 <script>
 import Pagination from "./lib/Pagination";
+import { mapGetters,mapActions } from 'vuex';//解構觀念：只取得 Vuex 中 mapGetters 的方法
 
 export default {
   components: {
@@ -125,13 +126,8 @@ export default {
   },
   data() {
     return {
-      // isLoading: false,//改成由 Vuex 統一管理
-      // productsAll: [],
-      // productsShow: [],
       productsShowLengthPerPage: 9,
       productsShowPaginated: [],
-      productsCategory: ["全部", "居家品味", "風格文具"],
-      productsCategoryShow: "",
       pagination: {
         total_pages: 0,
         current_page: 1
@@ -140,35 +136,34 @@ export default {
     };
   },
   computed:{
-    productsShow(){
-      return this.$store.state.productsAll;
-    }
+    ...mapGetters(['productsShow','productsCategory','productsCategoryShow']),
+    // productsShow(){
+    //   return this.$store.state.productsShow;
+    // },
+    // productsCategory(){
+    //   return this.$store.state.productsCategory;
+    // },
+    // productsCategoryShow(){
+    //   return this.$store.state.productsCategoryShow;
+    // },
+    
   },
   created() {
-    this.GetProducts();
+    this.getProducts();
     // this.TriggerCategory();
   },
   methods: {
-    GetProducts() {
-      this.$store.dispatch('GetProducts');
-      // const vm = this;
-      // const api = `${process.env.Get_products}/all`;
-      // let category = vm.$route.query.category;
-      // console.log(vm.$route)
-      // vm.$store.dispatch('updateLoading',true);
-      // this.$http.get(api).then(response => {
-      //   // console.log(response.data);
-      //   if (response.data.success) {
-      //     vm.productsAll = response.data.products;
-      //     if(category == undefined){
-      //       this.FilterProductsCategory();
-      //     }else{
-      //       this.FilterProductsCategory(category);
-      //     }
-      //     vm.$store.dispatch('updateLoading',false);
-      //   }
-      // });
+    getProducts() {
+      let category = this.$route.query.category;
+      if (category === undefined || category === null) {
+        category = '全部';
+      }
+      this.$store.dispatch('getProducts',category);
     },
+    changeProductsCategory(category){
+      this.$store.dispatch('changeProductsCategory',category);
+    },
+    
     // FilterProductsCategory(category = "全部") {
     //   const vm = this;
     //   vm.productsCategoryShow = category;

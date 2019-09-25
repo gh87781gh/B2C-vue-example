@@ -1,4 +1,3 @@
-
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
@@ -6,30 +5,33 @@ import axios from 'axios';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  strict:true,
-  state:{
-    isLoading:false,
-    productsAll:[],
-
-
-
-
+  strict: true,
+  state: {
+    isLoading: false,
+    productsAll: [],
+    productsShow: [],
+    productsCategory: ["全部", "居家品味", "風格文具"],
+    productsCategoryShow: "",
   },
-  actions:{ // 操作行為，不會操作到資料狀態
-    updateLoading(context,status){
-      context.commit('LOADING',status)
+  actions: { // 操作行為，不會操作到資料狀態
+    updateLoading(context, status) {
+      context.commit('LOADING', status)
     },
-    GetProducts(context,payload) {
+    getProducts(context, category) {
       const api = `${process.env.Get_products}/all`;
-      context.commit('LOADING',true)
+      context.commit('LOADING', true)
       axios.get(api).then(response => {
         if (response.data.success) {
-          context.commit('PRODUCTSAll',response.data.products)
-          context.commit('LOADING',false);
+          context.commit('GET_PRODUCTS_ALL', response.data.products);
+          context.dispatch('changeProductsCategory', category);
+          context.commit('LOADING', false);
         }
       });
     },
-    // FilterProductsCategory(category = "全部") {
+    changeProductsCategory(context, category) {
+      context.commit('CHOOSE_PRODUCTS_SHOW', category);
+    },
+    // filterProductsCategory(category = "全部") {
     //   const vm = this;
     //   vm.productsCategoryShow = category;
     //   if (category === "全部") {
@@ -64,12 +66,33 @@ export default new Vuex.Store({
     //   vm.TriggerPagination();
     // },
   },
-  mutations:{ // 實際操作狀態
-    LOADING(state,status){
+  mutations: { // 實際操作狀態
+    LOADING(state, status) {
       state.isLoading = status;
     },
-    PRODUCTSAll(state,payload){
+    GET_PRODUCTS_ALL(state, payload) {
       state.productsAll = payload;
-    }
+    },
+    CHOOSE_PRODUCTS_SHOW(state, category) {
+      if(category === '全部'){
+        state.productsShow = state.productsAll;
+      }else{
+        state.productsShow = state.productsAll.filter(item => {
+          return item.category == category;
+        });
+      };
+      state.productsCategoryShow = category;
+    },
+  },
+  getters:{ // 類似 computer 呈現運算結果的
+    productsShow(state){
+      return state.productsShow;
+    },
+    productsCategory(state){
+      return state.productsCategory;
+    },
+    productsCategoryShow(state){
+      return state.productsCategoryShow;
+    },
   },
 });
